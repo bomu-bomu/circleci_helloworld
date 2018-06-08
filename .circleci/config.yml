@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.3
-    working_directory: /demo
     steps:
       - checkout
       - run: echo "hello world"
