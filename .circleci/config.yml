@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.3
+      - image: redis
     steps:
       - checkout
       - run: echo "hello world"
