@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - mkdir logs
+      - run: mkdir logs
       - setup_remote_docker
       - run:
           name: Start TM and ABCI container
