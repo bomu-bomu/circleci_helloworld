@@ -5,6 +5,7 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
+      - mkdir logs
       - setup_remote_docker
       - run:
           name: Start TM and ABCI container
@@ -15,5 +16,24 @@ jobs:
           name: Start API container
           command: |
             docker-compose -f docker-compose.api.yml up -d
-      - run: sleep 30
-      - run: docker ps 
+      - run: npm install
+      - run: 
+          name: Start Mockup IDP Service
+          command: |
+            node ./mockclient/mockclient_idp.js 2>&1 | tee logs/mock_idp.log
+          background: true
+      - run: 
+          name: Start Mockup RP Service
+          command: |
+            node ./mockclient/mockclient_rp.js 2>&1 | tee logs/mock_rp.log
+          background: true
+      - run: 
+          name: Start Mockup AS Services
+          command: |
+            node ./mockclient/mockclient_as.js 2>&1 | tee logs/mock_as.log
+          background: true
+      - run:
+          name: Start test with cucumber
+          command: |
+            ./node_modules/.bin/cucumber-js features/data_request_flow/data_request_flow.feature --require features/data_request_flow/
+
