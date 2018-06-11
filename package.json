@@ -1,0 +1,33 @@
+{
+  "name": "ndid-test",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "docker-build": "docker-compose -f docker/docker-compose.build.yml build",
+    "docker-authen-up": "docker-compose -f docker/docker-compose-authen.yml up",
+    "docker-dataRequest-up": "docker-compose -f docker/docker-compose-dataRequest.yml up",
+    "docker-authen-down": "docker-compose -f docker/docker-compose-authen.yml down",
+    "docker-dataRequest-down": "docker-compose -f docker/docker-compose-dataRequest.yml down",
+    "docker-idp-up": "docker-compose -f docker/docker-compose-idp.yml up",
+    "docker-as-up": "docker-compose -f docker/docker-compose-as.yml up",
+    "docker-rp-up": "docker-compose -f docker/docker-compose-rp.yml up",
+    "docker-idp-down": "docker-compose -f docker/docker-compose-idp.yml down",
+    "docker-as-down": "docker-compose -f docker/docker-compose-as.yml down",
+    "docker-rp-down": "docker-compose -f docker/docker-compose-rp.yml down"
+  },
+  "dependencies": {
+    "bignum": "^0.12.5",
+    "crypto": "^1.0.1",
+    "cucumber": "^4.2.1",
+    "express": "^4.16.3",
+    "lodash": "^4.17.10",
+    "node-fetch": "^2.1.2",
+    "redis": "^2.8.0",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
+    "shelljs": "^0.8.2",
+    "uuid": "^3.2.1"
+  },
+  "author": "",
+  "license": "ISC"
+}
