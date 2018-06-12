@@ -5,6 +5,9 @@ services:
     networks: 
       - ndidplatform
   ndid-test-datarequest:
+    build:
+      context: ./
+      dockerfile: Dockerfile
     image: ndidplatform/ndid-test:latest
     environment:
       - IDP_API_IP=api-idp
