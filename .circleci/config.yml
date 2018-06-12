@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:8
-      - image: redis:3.2.11-alpine
     steps:
       - checkout
       - run: mkdir logs
@@ -18,23 +17,8 @@ jobs:
           command: |
             docker-compose -f docker-compose.api.yml up -d
       - run: npm install
-      - run: 
-          name: Start Mockup IDP Service
-          command: |
-            node ./mockclient/mockclient_idp.js 2>&1 | tee logs/mock_idp.log
-          background: true
-      - run: 
-          name: Start Mockup RP Service
-          command: |
-            node ./mockclient/mockclient_rp.js 2>&1 | tee logs/mock_rp.log
-          background: true
-      - run: 
-          name: Start Mockup AS Services
-          command: |
-            node ./mockclient/mockclient_as.js 2>&1 | tee logs/mock_as.log
-          background: true
+      - run: sleep 30
       - run:
-          name: Start test with cucumber
+          name: Start NDID Data Request Test 
           command: |
-            ./node_modules/.bin/cucumber-js features/data_request_flow/data_request_flow.feature --require features/data_request_flow/
-
+            docker-compose -f docker-compose-dataRequest.yml up
