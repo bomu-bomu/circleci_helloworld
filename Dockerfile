@@ -19,7 +19,7 @@ WORKDIR /ndid-test
 
 COPY . /ndid-test
 
-COPY docker/start-test.sh /ndid-test
+COPY start-test.sh /ndid-test
 
 COPY --from=build /ndid-test/node_modules /ndid-test/node_modules
 
