@@ -21,4 +21,4 @@ jobs:
       - run:
           name: Start NDID Data Request Test 
           command: |
-            docker-compose -f docker-compose-dataRequest.yml up
+            docker-compose -f docker-compose-dataRequest.yml --abort-on-container-exit up
