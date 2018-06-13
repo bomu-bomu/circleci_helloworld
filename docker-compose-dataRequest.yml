@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
     image: ndidplatform/ndid-test:latest
     environment:
-      - IDP_API_IP=api-idp
+      - IDP_API_IP=api-idp-1
       - RP_API_IP=api-rp
       - AS_API_IP=api-as
       - IDP_API_PORT=${IDP_PORT:-8080}

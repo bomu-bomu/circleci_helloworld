@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "docker-build": "docker-compose -f docker/docker-compose.build.yml build",
-    "docker-authen-up": "docker-compose -f docker/docker-compose-authen.yml up",
-    "docker-dataRequest-up": "docker-compose -f docker/docker-compose-dataRequest.yml up",
+    "docker-authen-up": "docker-compose -f docker/docker-compose-authen.yml up --abort-on-container-exit --force-recreate",
+    "docker-dataRequest-up": "docker-compose -f docker/docker-compose-dataRequest.yml up --abort-on-container-exit --force-recreate",
     "docker-authen-down": "docker-compose -f docker/docker-compose-authen.yml down",
     "docker-dataRequest-down": "docker-compose -f docker/docker-compose-dataRequest.yml down",
     "docker-idp-up": "docker-compose -f docker/docker-compose-idp.yml up",

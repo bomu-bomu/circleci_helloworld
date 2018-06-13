@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { Given, When, Then, After } = require("cucumber");
+const { Given, When, Then, AfterAll } = require("cucumber");
 const config = require("../../config.js");
 const uuidv1 = require('uuid/v1');
 const zkProof = require("../idp/zkProof.js");
@@ -8,8 +8,8 @@ const redis = require("redis");
 const sub = redis.createClient({host:config.REDIS_IP,port:config.REDIS_PORT});
 
 //IDP create identity and RP create request
-let namespace = process.env.NS || "cid";
-let identifier = process.env.ID || "1234";
+let namespace = process.env.NS;
+let identifier = process.env.ID;
 let identity_ial = process.env.IDENTITY_IAL|| "2.3"; //For IDP create identity
 //RP create request
 let min_idp = process.env.MIN_IDP;
@@ -25,7 +25,8 @@ let service_id = process.env.SERVICE_ID || "bank_statement";
 let timeoutWaitStatus = parseInt(process.env.TIMEOUT_STATUS_FROM_IDP || '20000');
 //Timeout for RP wait data from AS
 let timeoutWaitDataFromAS = parseInt(process.env.TIMEOUT_DATA_FROM_AS || '20000');
-
+//Time to exit test when test finish
+const exitWhenFinish = parseInt(process.env.EXIT_WHEN_FINISH) || 5000;
 //prevent duplicate accessor_id
 const nonce = uuidv1();
 
@@ -76,6 +77,12 @@ sub.subscribe("callback_from_idp_platform");
 sub.subscribe("receive_data_request_from_platform");
 sub.subscribe("response_data_to_platform");
 
+AfterAll(function(){
+  setTimeout(function(){
+    process.exit(0);
+  },exitWhenFinish)
+})
+
 //########### IDP ###########
 Given("IDP client making a request for set callback url", function(data) {
   let dataRequest = JSON.parse(data);
@@ -97,8 +104,8 @@ Given("IDP client making a request for set accessor callback url", function(data
 
 Given("IDP client making a request for create new identity", function(data) {
     let dataRequest = JSON.parse(data);
-    let ns = namespace == null ? dataRequest.namespace : namespace
-    let id = identifier == null ? dataRequest.identifier : identifier
+    let ns = namespace == null ? uuidv1() : namespace
+    let id = identifier == null ? uuidv1() : identifier
     let sid = ns + "-" + id;
     zkProof.genNewKeyPair(sid);
     let accessor_public_key = fs.readFileSync(config.keyPath + sid + '.pub','utf8');
@@ -114,7 +121,7 @@ Given("IDP client making a request for create new identity", function(data) {
     }
   namespace = this.requestBody.namespace;
   identifier = this.requestBody.identifier;
-
+  fs.writeFileSync(config.keyPath + "accessor_id_"+ this.requestBody.accessor_id,sid,'utf8');
   console.log("\nIDP Create new identity \n", this.prettyPrintJSON(this.requestBody));
 });
 

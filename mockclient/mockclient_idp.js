@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const shell = require("shelljs");
 const path = require("path");
 const fs = require("fs");
-const fetch = require("node-fetch");
 const { spawnSync } = require("child_process");
 const uuidv1 = require('uuid/v1');
 const zkProof = require('../features/idp/zkProof.js')
@@ -91,7 +90,7 @@ function CreateIdentitty(){
 }
 
 app.post("/idp/request", (req, res) => {
-  const { request } = req.body;
+  const request = req.body;
   if (request.type === "onboard_request") { //Result consent for onboard
     try {
       shell.exec(
@@ -107,15 +106,29 @@ app.post("/idp/request", (req, res) => {
     }
   } else {
     if (_autoResponse()) {
+      let 
+      // let confirm;
+      // let delayResponse;
+      // try{
+      //   let request_message = JSON.parse(request.request_message)
+      //   confirm = typeof request_message.confirm == 'undefined' ? "" : request_message.confirm;
+      //   delayResponse = typeof request_message.delayResponse == 'undefined' ? 0 : parseInt(request_message.delayResponse);
+      // }
+      // catch(error){
+      //   confirm = "";
+      //   delayResponse = 0;
+      // }
       try {
-        shell.exec(
-          `${path.join(
-            __dirname,
-            "..",
-            "scripts",
-            "idp-send-response.sh"
-          )} '${JSON.stringify(request)}' '${nonce}'`
-        );
+        setTimeout(function(){
+          shell.exec(
+            `${path.join(
+              __dirname,
+              "..",
+              "scripts",
+              "idp-send-response.sh"
+            )} '${JSON.stringify(request)}' '${nonce}' '${confirm}'`
+          );
+        },delayResponse)
       } catch (error) {
         throw error;
       }
@@ -123,23 +136,22 @@ app.post("/idp/request", (req, res) => {
       pub.publish("callback_from_idp_platform", JSON.stringify(request));
     }
   }
+  
   res.status(200).end();
 });
 
-app.post('/idp/accessor/:accessor_id', async (req, res) => {
+app.post('/idp/accessor', async (req, res) => {
+
+  let { sid_hash, accessor_id } = req.body;
+  let sid = accessorSign[accessor_id];
+
   if(!_autoResponse()){
-    let { accessor_id } = req.params;
-    let { hash_of_sid } = req.body;
-    let sid = namespace+"-"+identifier
-    res.status(200).send(zkProof.accessorSign(sid, hash_of_sid));
+    sid = fs.readFileSync(config.keyPath + "accessor_id_" + accessor_id,'utf8');
   }
-  else{
-    let { accessor_id } = req.params;
-    let { hash_of_sid } = req.body;
-    let sid = accessorSign[accessor_id];
-    res.status(200).send(zkProof.accessorSign(sid, hash_of_sid));
-  }
-  
+
+    res.status(200).send({
+    signature: zkProof.accessorSign(sid, sid_hash)
+  });
 });
 
 
