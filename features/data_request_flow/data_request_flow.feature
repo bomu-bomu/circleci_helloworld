@@ -8,7 +8,6 @@ Feature: Data Request Flow
             "url": "http://localhost:1090/as/service/bank_statement",
             "service_id": "bank_statement",
             "service_name": "Bank statement description",
-            "min_ial": 1,
             "min_ial": 1.1,
             "min_aal": 1
             }
@@ -53,7 +52,6 @@ Feature: Data Request Flow
         Then The response status code should be "200"
         And The response for create new identity
 
-    @SendCallbackToClient
     Scenario: RP client create request
         Given RP client making a request for create request
             """json
@@ -79,7 +77,6 @@ Feature: Data Request Flow
         Then The response status code should be "200"
         And The response property "request_id" is
 
-    @SendCallbackToClient
     Scenario: IDP client create response
         Given IDP client should receive request from IDP platform
         And IDP client making a request for create response

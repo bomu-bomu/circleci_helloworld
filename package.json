@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "docker-build": "docker-compose -f docker/docker-compose.build.yml build",
-    "docker-authen-up": "docker-compose -f docker/docker-compose-authen.yml up --abort-on-container-exit --force-recreate",
-    "docker-dataRequest-up": "docker-compose -f docker/docker-compose-dataRequest.yml up --abort-on-container-exit --force-recreate",
+    "docker-authen-up": "docker-compose -f docker/docker-compose-authen.yml up --abort-on-container-exit",
+    "docker-dataRequest-up": "docker-compose -f docker/docker-compose-dataRequest.yml up --abort-on-container-exit",
     "docker-authen-down": "docker-compose -f docker/docker-compose-authen.yml down",
     "docker-dataRequest-down": "docker-compose -f docker/docker-compose-dataRequest.yml down",
     "docker-idp-up": "docker-compose -f docker/docker-compose-idp.yml up",
@@ -26,7 +26,8 @@
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
     "shelljs": "^0.8.2",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "cucumber-junit": "^1.7.1"
   },
   "author": "",
   "license": "ISC"

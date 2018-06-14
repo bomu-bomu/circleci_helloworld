@@ -38,7 +38,6 @@ Feature: Authentication Flow
         Then The response status code should be "200"
         And The response for create new identity
 
-    @SendCallbackToClient
     Scenario: RP client create request
         Given RP client making a request for create request
             """json
