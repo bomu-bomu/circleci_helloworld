@@ -5,7 +5,12 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: mkdir test-result
+      - run:
+          name: Setup
+          command: |
+            echo $CWD
+            pwd
+            mkdir ~/project/test-result
       - setup_remote_docker
       - run:
           name: Start TM and ABCI container
@@ -24,5 +29,5 @@ jobs:
       - store_test_results:
           path: ./test-result
       - store_artifacts:
-          path: .
+          path: ./test-result
           destination: project
