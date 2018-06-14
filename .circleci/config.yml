@@ -9,15 +9,14 @@ jobs:
       - run:
           name: Start TM and ABCI container
           command: |
-            docker-compose -f docker-compose.yml up
-          background: true
+            docker-compose -f docker-compose.yml up -d 
       - run:
           name: Start API container
           command: |
             docker-compose -f docker-compose.api.yml up
           background: true
       - run: npm install
-      - run: sleep 30
+      - run: sleep 60
       - run:
           name: Create dummy container
           command: |
