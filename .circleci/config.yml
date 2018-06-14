@@ -22,7 +22,7 @@ jobs:
           command: |
             docker-compose -f docker-compose-dataRequest.yml up --abort-on-container-exit
       - store_test_results:
-          path: test-result
+          path: ./test-result
       - store_artifacts:
-          path: test-result
-          destination: test-result
+          path: .
+          destination: project
