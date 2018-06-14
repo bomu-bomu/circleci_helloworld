@@ -9,6 +9,8 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: ndidplatform/ndid-test:latest
+    volumes:
+      - ../test-result:/ndid-test/test-result
     environment:
       - IDP_API_IP=api-idp-1
       - RP_API_IP=api-rp

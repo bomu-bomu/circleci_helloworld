@@ -5,13 +5,12 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run: mkdir logs
+      - run: mkdir test-result
       - setup_remote_docker
       - run:
           name: Start TM and ABCI container
           command: |
             docker-compose -f docker-compose.yml up -d
-      - run: sleep 30
       - run:
           name: Start API container
           command: |
@@ -22,3 +21,8 @@ jobs:
           name: Start NDID Data Request Test 
           command: |
             docker-compose -f docker-compose-dataRequest.yml up --abort-on-container-exit
+      - store_test_results:
+          path: test-result
+      - store_artifacts:
+          path: test-result
+          destination: test-result
