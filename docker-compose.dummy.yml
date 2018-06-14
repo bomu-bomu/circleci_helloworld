@@ -1,0 +1,18 @@
+version: '3'
+services:
+  dummy:
+    container_name: dummy
+    image: mauler/simple-ftp-server
+    environment:
+      - FTP_USER=demo
+      - FTP_PASS=demo
+    volumes:
+      - test_result:/results
+    networks:
+      - ndidplatform
+
+networks:
+  ndidplatform:
+
+volumes:
+  test_result:

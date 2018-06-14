@@ -13,7 +13,7 @@ RUN apk update && apk add --virtual .build-deps \
 
 FROM node:8-alpine
 
-RUN apk update && apk add --no-cache bash openssl
+RUN apk update && apk add --no-cache bash openssl lftp
 
 WORKDIR /ndid-test
 

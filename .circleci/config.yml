@@ -5,11 +5,6 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run:
-          name: Setup
-          command: |
-            mkdir ~/project/test-result
-            ls -l ~/project
       - setup_remote_docker
       - run:
           name: Start TM and ABCI container
@@ -22,11 +17,17 @@ jobs:
       - run: npm install
       - run: sleep 30
       - run:
+          name: Create dummy container
+          command: |
+            docker-compose -f docker-compose.dummy.yml up -d
+      - run:
           name: Start NDID Data Request Test 
           command: |
             docker-compose -f docker-compose-dataRequest.yml up --abort-on-container-exit
-      - run: ls -l ~/project
-      - run: ls -l ~/project/test-result
+      - run:
+          name: Copy test result from container
+          command: |
+            docker cp dummy:/results ./test-result
       - store_test_results:
           path: ./test-result
       - store_artifacts:

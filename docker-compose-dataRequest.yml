@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
     image: ndidplatform/ndid-test:latest
     volumes:
-      - /home/circleci/project/test-result:/ndid-test/test-result
+      - test_result:/ndid-test/test-result
     environment:
       - IDP_API_IP=api-idp-1
       - RP_API_IP=api-rp
@@ -35,4 +35,5 @@ services:
 
 networks:
   ndidplatform:
-
+volumes:
+  test_result:
