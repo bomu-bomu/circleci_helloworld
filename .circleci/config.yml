@@ -16,19 +16,25 @@ jobs:
             docker-compose -f docker-compose.api.yml up
           background: true
       - run: npm install
-      - run: sleep 60
+      - run: sleep 45
       - run:
           name: Create dummy container
           command: |
             docker-compose -f docker-compose.dummy.yml up -d
       - run:
+          name: Build test container
+          command: |
+            docker-compose -f docker-compose-dataRequest.yml build
+      - run:
           name: Start NDID Data Request Test 
           command: |
             docker-compose -f docker-compose-dataRequest.yml up --abort-on-container-exit
+            docker-compose -f docker-compose-dataRequest.yml down
       - run:
           name: Copy test result from container
           command: |
             docker cp dummy:/results ./test-result
+          when: always
       - store_test_results:
           path: ./test-result
       - store_artifacts:
