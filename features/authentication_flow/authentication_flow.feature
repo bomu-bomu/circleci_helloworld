@@ -38,6 +38,10 @@ Feature: Authentication Flow
         Then The response status code should be "200"
         And The response for create new identity
 
+    Scenario: IDP client receive response from consent for onboard
+        Given IDP client should receive response from consent for onboard
+        Then The response property "success" should be "true"
+
     Scenario: RP client create request
         Given RP client making a request for create request
             """json

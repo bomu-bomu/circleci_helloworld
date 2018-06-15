@@ -1,0 +1,22 @@
+[
+  {
+    "namespace": "cid",
+    "identifier": "1234",
+    "idp_list": [],
+    "data_request_list": [
+      {
+        "service_id": "bank_statement",
+        "as_id_list": ["as1", "as2", "as3"],
+        "count": 1,
+        "request_params": {
+          "format": "pdf"
+        }
+      }
+    ],
+    "request_message":"dummy Request Message",
+    "min_ial": 1.1,
+    "min_aal": 1,
+    "min_idp": 1,
+    "request_timeout": 259200
+  }
+]

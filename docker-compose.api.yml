@@ -75,9 +75,6 @@ services:
       - "8300:${API_PORT:-8080}"
     networks:
       - ndidplatform
-
+      
 networks:
   ndidplatform:
-
-volumes:
-  test_result:

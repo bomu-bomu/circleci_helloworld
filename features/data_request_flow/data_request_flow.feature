@@ -13,7 +13,7 @@ Feature: Data Request Flow
             }
             """
         When AS client make a POST request for "register service" to "/as/service/bank_statement"
-        Then The response status code should be "201"
+        Then The response status code should be "204"
 
     Scenario: IDP client set callback url
         Given IDP client making a request for set callback url
@@ -51,6 +51,10 @@ Feature: Data Request Flow
         When IDP client make a POST request for create new identity to "/identity"
         Then The response status code should be "200"
         And The response for create new identity
+
+    Scenario: IDP client receive response from consent for onboard
+        Given IDP client should receive response from consent for onboard
+        Then The response property "success" should be "true"
 
     Scenario: RP client create request
         Given RP client making a request for create request

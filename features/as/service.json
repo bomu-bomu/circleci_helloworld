@@ -5,10 +5,4 @@
     "min_ial": 1.1,
     "min_aal": 1
   }
-  ,{
-    "service_id": "bank_statement2",
-    "service_name": "222222",
-    "min_ial": 1.1,
-    "min_aal": 1
-  }
 ]

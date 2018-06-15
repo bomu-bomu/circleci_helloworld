@@ -9,8 +9,9 @@ Feature: AS's transaction
             "service_id": "bank_statement",
             "service_name": "Bank statement description",
             "min_ial": 1.1,
-            "min_aal": 1
+            "min_aal": 1,
+            "url": "http://localhost:1090/as/service/bank_statement"
             }
             """
         When AS client make a POST request for "register service" to "/as/service/bank_statement"
-        Then The response status code should be "201"
+        Then The response status code should be "204"
